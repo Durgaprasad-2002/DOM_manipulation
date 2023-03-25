@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DOM_Manipulation_Task</title>
+	<style type="text/css">
+		input{
+			width: 270px;
+		}
+		ul{
+			list-style-type: none;
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+
+	<p id="para">This is my first dom manipulation task in <strong>HERO_VIRED</strong> <p>
+	<button id="btn">Click Here</button>
+	<br><br>
+	<input type="text" id="in" placeholder="enter text here to display in above paragraph"><br><br>
+	<button onclick="display()">click here to display it</button>
+
+	<ul>
+		<li onmouseover="changeToNew(this)" onmouseout="changeToOriginal(this)">HTML</li>
+		<li onmouseover="changeToNew(this)" onmouseout="changeToOriginal(this)">CSS</li>
+		<li onmouseover="changeToNew(this)" onmouseout="changeToOriginal(this)">JavaScript</li>
+	</ul>
+
+	<script type="text/javascript">
+
+		var para=document.getElementById('para');  //getting p element in document by using id
+		para.onmouseout=()=>{para.style.color='black'};
+		para.onmouseover=()=>{para.style.color='red'};
+
+		// --------------------------------------------------------------------------------------------------------
+
+		let btn=document.getElementById('btn');  //getting button-1 element in document by using id
+		btn.onmouseover=MouseEvent;
+		btn.onmouseout=MouseEvent;
+
+		var Dummy_variable="Dont Click Here";
+
+		function MouseEvent() {
+			var curr=btn.innerHTML;
+			btn.innerHTML=Dummy_variable;
+			Dummy_variable=curr;
+		}
+
+
+		// ---------------------------------------------------------------------------------------------------------
+
+		function display() {
+			let val=document.getElementById('in').value;
+			para.innerHTML=val;
+		}
+
+		// ---------------------------------------------------------------------------------------------------------
+
+		function changeToNew(ele) {
+			ele.style.color='red';
+			ele.style.fontWeight='bold';
+		}
+
+		function changeToOriginal(ele) {
+			ele.style.color='black';
+			ele.style.fontWeight='normal';
+		}
+
+
+	</script>
+</body>
+</html>

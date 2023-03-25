@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Calculater</title>
+	<link rel="icon" type="image/x-icon" class="fa fa-calculator" aria-hidden="true">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		body{
+			font-family: monospace;
+			background: lightslategrey;
+		}
+		table{
+			box-shadow: 0px 4px 8px 0px  black;
+			padding: 4.5px;
+			background: bisque;
+			border: solid 3px black;
+			border-radius: 5px;
+			height: 320px;
+			width: 310px;
+		}
+		button{
+			border-left:black 2px solid;
+			border-top:black 2px solid ;
+			border-right:darkgrey 2px solid ;
+			border-bottom:darkgrey 2px solid ;
+			font-size: 15px;
+			font-family: monospace;
+			height: 45px;
+			width: 70px;
+			background:#404040;
+			color: white;
+			border-radius: 2px;
+			transition: background 0.1s;
+		}
+		table td{
+			padding: 1px;
+			text-align: center;
+		}
+		table #scrn{
+			background: ghostwhite; 
+			height: 55px;
+			border-radius: 3px; 
+			border: 3px grey solid;
+			text-align: right;
+		}
+		table button:active{
+			color: black;
+			background:whitesmoke;
+		}
+		table #eq button:active{
+			color: white;
+			background: green;
+		}
+		table  #cl button:active{
+			color: white;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<br><br><br>
+		<table>
+			<tr>
+				<td id="scrn" colspan="4">
+					<span id="span_id" style="color: black; text-align: right;"></span>
+				</td>
+			</tr>
+			<tr>
+				<td onclick="cal('cl')" id="cl"><button>Clear</button></td>
+				<td onclick="cal('%')"><button>%</button></td>
+				<td onclick="back()"><button><i class="fa fa-step-backward" aria-hidden="true"></i></button></td>
+				<td onclick="cal('/')"><button>/</button></td>
+			</tr>
+			<tr>
+				<td onclick="cal(7)"><button>7</button></td>
+				<td onclick="cal(8)"><button>8</button></td>
+				<td onclick="cal(9)"><button>9</button></td>
+				<td onclick="cal('x')"><button>x</button></td>
+			</tr>
+			<tr>
+				<td onclick="cal(4)"><button>4</button></td>
+				<td onclick="cal(5)"><button>5</button></td>
+				<td onclick="cal(6)"><button>6</button></td>
+				<td onclick="cal('-')"><button>-</button></td>
+			</tr>
+			<tr>
+				<td onclick="cal(3)"><button>3</button></td>
+				<td onclick="cal(2)"><button>2</button></td>
+				<td onclick="cal(1)"><button>1</button></td>
+				<td onclick="cal('+')"><button>+</button></td>
+			</tr>
+			<tr>
+				<td onclick="cal('00')"><button>00</button></td>
+				<td onclick="cal(0)"><button>0</button></td>
+				<td onclick="cal('.')"><button>.</button></td>
+				<td onclick="cal2();" id="eq"><button>=</button></td>
+			</tr>
+		</table>
+	</center>
+</body>
+<script type="text/javascript">
+	let t=document.getElementsByTagName('td');
+	let sp=document.getElementById('span_id');
+	let c='';
+	var m='';
+	let c1='';
+	let op="+-%/x";
+
+	//------------------------------------------------------------------------------------------------
+
+	function ReverseString(str) { // for reversing values
+		    if(str.length < 2)  return str;
+		    const revArray = [];
+		    const length = str.length - 1;
+		    for(let i = length; i >= 0; i--) revArray.push(str[i]);
+		    return revArray.join('');
+	}
+
+	function back() { // for removing entered digits or operations
+		c=String(c)
+		c1=String(c1)
+		if (c1!='') {
+			var r=c1.slice(c1.length-1);
+			c1=ReverseString(c1)
+			c1=c1.replace(r,'')
+			c1=ReverseString(c1)
+		}
+		else if (m!='') m='';
+		else if (c!='') {
+			var r=c.slice(c.length-1);
+			c=ReverseString(c)
+			c=c.replace(r,'')
+			c=ReverseString(c)
+		}
+		sp.innerHTML=c+m+c1;
+	}
+
+ 	//-----------------------------------------------------------------------------------------
+
+	function cal2() {
+			c=parseFloat(c);
+			c1=parseFloat(c1);
+			if (m=='%') c=c%c1;
+			else if (m=='x') c=c*c1;
+			else if (m=='/') c=c/c1;
+			else if (m=='+') c=c+c1;
+			else if (m=='-') c=c-c1;
+			c1='';
+			m='';
+			sp.innerHTML=c;
+	}
+
+	function cal(v) {
+		if (v=='cl') {  // to clear values
+			c='';
+			c1='';
+			m='';
+			sp.innerHTML='';
+		}
+		else if (op.includes(v) && m!=''){ 	// finding opeartion when it have previous values
+			cal2();
+			m=v;
+		}
+		else if (op.includes(v)) m=v;  		// finding opeartion when it does have previous values
+		else { 								
+			if (m!='') c1+=v;				// getting values from user
+			else c+=v;
+		}
+		sp.innerHTML+=v;
+	}
+</script>
+</html>
